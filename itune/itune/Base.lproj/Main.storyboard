@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -18,22 +19,61 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="HIA-uH-hff">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="-8" width="600" height="600"/>
+                                <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="BPc-EP-ZAa">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellID" id="BPc-EP-ZAa">
                                         <rect key="frame" x="0.0" y="28" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BPc-EP-ZAa" id="luD-EZ-XR4">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7J5-dU-Iih">
+                                                    <rect key="frame" x="533" y="8" width="46" height="30"/>
+                                                    <animations/>
+                                                    <state key="normal" title="Play "/>
+                                                    <connections>
+                                                        <action selector="playTheSong:" destination="BYZ-38-t0r" eventType="touchDown" id="0Mi-Kv-Qkf"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UKb-ko-eiA">
+                                                    <rect key="frame" x="388" y="8" width="88" height="30"/>
+                                                    <animations/>
+                                                    <state key="normal" title="Download"/>
+                                                    <connections>
+                                                        <action selector="downloadTheSong:" destination="BYZ-38-t0r" eventType="touchDown" id="Ewy-He-gvX"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstAttribute="bottomMargin" secondItem="UKb-ko-eiA" secondAttribute="bottom" constant="-3" id="4LW-Uj-Xeb"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="7J5-dU-Iih" secondAttribute="trailing" constant="13" id="83j-1P-lns"/>
+                                                <constraint firstItem="7J5-dU-Iih" firstAttribute="top" secondItem="luD-EZ-XR4" secondAttribute="topMargin" id="BvR-ZI-53W"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="UKb-ko-eiA" secondAttribute="trailing" constant="116" id="FbW-Ud-g7k"/>
+                                                <constraint firstItem="7J5-dU-Iih" firstAttribute="leading" secondItem="luD-EZ-XR4" secondAttribute="leadingMargin" constant="525" id="FpB-6H-elS"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="7J5-dU-Iih" secondAttribute="bottom" constant="-3" id="Mwv-ps-gCq"/>
+                                                <constraint firstItem="UKb-ko-eiA" firstAttribute="leading" secondItem="luD-EZ-XR4" secondAttribute="leadingMargin" constant="380" id="TQa-SU-CSB"/>
+                                                <constraint firstItem="UKb-ko-eiA" firstAttribute="top" secondItem="luD-EZ-XR4" secondAttribute="topMargin" id="yfy-sX-Tyc"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <animations/>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="oks-Gq-OHv"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="sb7-dY-1Va"/>
+                                </connections>
                             </tableView>
                         </subviews>
+                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="HIA-uH-hff" id="egI-L0-KnW"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

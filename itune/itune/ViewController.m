@@ -11,10 +11,12 @@
 
 #import "ViewController.h"
 
-@interface ViewController () <NSURLSessionDelegate, NSURLSessionDownloadDelegate, NSURLSessionTaskDelegate>
+@interface ViewController () <NSURLSessionDelegate, NSURLSessionDownloadDelegate, NSURLSessionTaskDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) NSURLSession *session;
 @property (nonatomic, strong) NSArray *itunesEntries;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+
 
 @end
 
@@ -88,10 +90,66 @@ didFinishDownloadingToURL:(NSURL *)location {
 	AVPlayerViewController *playerViewController = [[AVPlayerViewController alloc] initWithNibName:nil bundle:nil];
 	AVPlayer *player = [AVPlayer playerWithURL:[NSURL fileURLWithPath:destinationUrl]];
 	playerViewController.player = player;
-	[self presentViewController:playerViewController
-					   animated:YES
-					 completion:NULL];
+//	[self presentViewController:playerViewController
+//					   animated:YES
+//					 completion:NULL];
 	
 }
 
+- (IBAction)playTheSong:(id)sender {
+    NSString *destinationUrl = [[NSHomeDirectory() stringByAppendingPathComponent:@"Library"] stringByAppendingPathComponent:@"Application Support"];
+    destinationUrl = [destinationUrl stringByAppendingPathComponent:@"2.m4a"];
+    
+    AVPlayerViewController *playerViewController = [[AVPlayerViewController alloc] initWithNibName:nil bundle:nil];
+    AVPlayer *player = [AVPlayer playerWithURL:[NSURL fileURLWithPath:destinationUrl]];
+    playerViewController.player = player;
+    	[self presentViewController:playerViewController
+    					   animated:YES
+    					 completion:NULL];
+}
+
+- (IBAction)downloadTheSong:(id)sender {
+    
+}
+
+#pragma mark Table View data source
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 50;// [self.itunesEntries count];
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *artistName = [self.itunesEntries objectAtIndex:indexPath.row][@"artistName"];
+    NSString *songInfo = [[artistName stringByAppendingFormat:@" – "] stringByAppendingString:[self.itunesEntries objectAtIndex:indexPath.row][@"trackName"]];
+    CGSize textSize = [songInfo sizeWithFont:[UIFont systemFontOfSize: 14.0] forWidth:[tableView frame].size.width - 40.0 lineBreakMode:NSLineBreakByWordWrapping];
+    return textSize.height < 44.0 ? 44.0 : textSize.height;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:
+(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    //NSLog(@"Section:%d Row:%d selected and its data is %@",
+      //    indexPath.section,indexPath.row,cell.textLabel.text);
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID" forIndexPath:indexPath];
+    //CDBasket *basket = self.fetchedResultsController.fetchedObjects[indexPath.row];
+    NSString *artistName = [self.itunesEntries objectAtIndex:indexPath.row][@"artistName"];
+    NSString *songInfo = [[artistName stringByAppendingFormat:@" – "] stringByAppendingString:[self.itunesEntries objectAtIndex:indexPath.row][@"trackName"]];
+    [[cell textLabel] setNumberOfLines:0];
+    [[cell textLabel] setLineBreakMode:NSLineBreakByWordWrapping];
+    [[cell textLabel] setFont:[UIFont systemFontOfSize: 14.0]];
+    cell.textLabel.text = songInfo;
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    return cell;
+}
+
+- (IBAction)playSong:(id)sender {
+}
 @end
